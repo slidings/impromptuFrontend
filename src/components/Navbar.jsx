@@ -1,6 +1,5 @@
 import { NavLink } from 'react-router-dom';
 import logo from '../assets/images/logo.png';
-//import Button from "@mui/material/Button";
 
 const Navbar = () => {
   const linkClass = ({ isActive }) =>
@@ -30,7 +29,6 @@ const Navbar = () => {
                 <NavLink to='/add-job' className={linkClass}>
                   Add Job
                 </NavLink>
-                <button> Log In </button>
               </div>
             </div>
           </div>
