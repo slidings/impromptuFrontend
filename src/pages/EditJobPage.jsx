@@ -39,7 +39,7 @@ const EditJobPage = ({ updateJobSubmit }) => {
 
     updateJobSubmit(updatedJob);
 
-    toast.success('Job Updated Successfully');
+    toast.success('Task Updated Successfully');
 
     return navigate(`/jobs/${id}`);
   };
@@ -50,7 +50,7 @@ const EditJobPage = ({ updateJobSubmit }) => {
         <div className='bg-white px-6 py-8 mb-4 shadow-md rounded-md border m-4 md:m-0'>
           <form onSubmit={submitForm}>
             <h2 className='text-3xl text-center font-semibold mb-6'>
-              Update Job
+              Update Task
             </h2>
 
             <div className='mb-4'>
@@ -58,7 +58,7 @@ const EditJobPage = ({ updateJobSubmit }) => {
                 htmlFor='type'
                 className='block text-gray-700 font-bold mb-2'
               >
-                Job Type
+                Task Type
               </label>
               <select
                 id='type'
@@ -68,23 +68,21 @@ const EditJobPage = ({ updateJobSubmit }) => {
                 value={type}
                 onChange={(e) => setType(e.target.value)}
               >
-                <option value='Full-Time'>Full-Time</option>
-                <option value='Part-Time'>Part-Time</option>
-                <option value='Remote'>Remote</option>
-                <option value='Internship'>Internship</option>
+                <option value='Full-Time'>Request (I need something!)</option>
+                <option value='Part-Time'>Service (I want to offer something!)</option>
               </select>
             </div>
 
             <div className='mb-4'>
               <label className='block text-gray-700 font-bold mb-2'>
-                Job Listing Name
+                Task Listing Name
               </label>
               <input
                 type='text'
                 id='title'
                 name='title'
                 className='border rounded w-full py-2 px-3 mb-2'
-                placeholder='eg. Beautiful Apartment In Miami'
+                placeholder='eg. Need help in assembling my ikea furniture'
                 required
                 value={title}
                 onChange={(e) => setTitle(e.target.value)}
@@ -102,39 +100,10 @@ const EditJobPage = ({ updateJobSubmit }) => {
                 name='description'
                 className='border rounded w-full py-2 px-3'
                 rows='4'
-                placeholder='Add any job duties, expectations, requirements, etc'
+                placeholder='Add any task explanation, expectations, requirements, etc'
                 value={description}
                 onChange={(e) => setDescription(e.target.value)}
               ></textarea>
-            </div>
-
-            <div className='mb-4'>
-              <label
-                htmlFor='type'
-                className='block text-gray-700 font-bold mb-2'
-              >
-                Salary
-              </label>
-              <select
-                id='salary'
-                name='salary'
-                className='border rounded w-full py-2 px-3'
-                required
-                value={salary}
-                onChange={(e) => setSalary(e.target.value)}
-              >
-                <option value='Under $50K'>Under $50K</option>
-                <option value='$50K - 60K'>$50K - $60K</option>
-                <option value='$60K - 70K'>$60K - $70K</option>
-                <option value='$70K - 80K'>$70K - $80K</option>
-                <option value='$80K - 90K'>$80K - $90K</option>
-                <option value='$90K - 100K'>$90K - $100K</option>
-                <option value='$100K - 125K'>$100K - $125K</option>
-                <option value='$125K - 150K'>$125K - $150K</option>
-                <option value='$150K - 175K'>$150K - $175K</option>
-                <option value='$175K - 200K'>$175K - $200K</option>
-                <option value='Over $200K'>Over $200K</option>
-              </select>
             </div>
 
             <div className='mb-4'>
@@ -146,28 +115,28 @@ const EditJobPage = ({ updateJobSubmit }) => {
                 id='location'
                 name='location'
                 className='border rounded w-full py-2 px-3 mb-2'
-                placeholder='Company Location'
+                placeholder='Location'
                 required
                 value={location}
                 onChange={(e) => setLocation(e.target.value)}
               />
             </div>
 
-            <h3 className='text-2xl mb-5'>Company Info</h3>
+            <h3 className='text-2xl mb-5'>Contact Info</h3>
 
             <div className='mb-4'>
               <label
                 htmlFor='company'
                 className='block text-gray-700 font-bold mb-2'
               >
-                Company Name
+                Name
               </label>
               <input
                 type='text'
                 id='company'
                 name='company'
                 className='border rounded w-full py-2 px-3'
-                placeholder='Company Name'
+                placeholder='Name'
                 value={companyName}
                 onChange={(e) => setCompanyName(e.target.value)}
               />
@@ -178,14 +147,14 @@ const EditJobPage = ({ updateJobSubmit }) => {
                 htmlFor='company_description'
                 className='block text-gray-700 font-bold mb-2'
               >
-                Company Description
+                Additional Information
               </label>
               <textarea
                 id='company_description'
                 name='company_description'
                 className='border rounded w-full py-2 px-3'
                 rows='4'
-                placeholder='What does your company do?'
+                placeholder='Eg. Alternate ways to contact'
                 value={companyDescription}
                 onChange={(e) => setCompanyDescription(e.target.value)}
               ></textarea>
@@ -203,7 +172,7 @@ const EditJobPage = ({ updateJobSubmit }) => {
                 id='contact_email'
                 name='contact_email'
                 className='border rounded w-full py-2 px-3'
-                placeholder='Email address for applicants'
+                placeholder='Email address for contact'
                 required
                 value={contactEmail}
                 onChange={(e) => setContactEmail(e.target.value)}
@@ -221,7 +190,7 @@ const EditJobPage = ({ updateJobSubmit }) => {
                 id='contact_phone'
                 name='contact_phone'
                 className='border rounded w-full py-2 px-3'
-                placeholder='Optional phone for applicants'
+                placeholder='Optional'
                 value={contactPhone}
                 onChange={(e) => setContactPhone(e.target.value)}
               />
@@ -232,7 +201,7 @@ const EditJobPage = ({ updateJobSubmit }) => {
                 className='bg-indigo-500 hover:bg-indigo-600 text-white font-bold py-2 px-4 rounded-full w-full focus:outline-none focus:shadow-outline'
                 type='submit'
               >
-                Update Job
+                Update Task
               </button>
             </div>
           </form>
