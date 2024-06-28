@@ -68,8 +68,8 @@ const EditJobPage = ({ updateJobSubmit }) => {
                 value={type}
                 onChange={(e) => setType(e.target.value)}
               >
-                <option value='Full-Time'>Request (I need something!)</option>
-                <option value='Part-Time'>Service (I want to offer something!)</option>
+                <option value='Request'>Request (I need something!)</option>
+                <option value='Service'>Service (I want to offer something!)</option>
               </select>
             </div>
 
@@ -100,7 +100,7 @@ const EditJobPage = ({ updateJobSubmit }) => {
                 name='description'
                 className='border rounded w-full py-2 px-3'
                 rows='4'
-                placeholder='Add any task explanation, expectations, requirements, etc'
+                placeholder='Add any task explanation, remuerations, requirements, etc'
                 value={description}
                 onChange={(e) => setDescription(e.target.value)}
               ></textarea>
