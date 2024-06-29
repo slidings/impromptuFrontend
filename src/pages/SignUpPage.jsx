@@ -2,41 +2,21 @@ import { useState } from "react";
 import { useNavigate } from "react-router-dom";
 import { toast } from "react-toastify";
 
-const SignUp = ({ addJobSubmit }) => {
-  const [title, setTitle] = useState("");
-  const [type, setType] = useState("Request");
-  const [location, setLocation] = useState("");
-  const [description, setDescription] = useState("");
-  const [salary, setSalary] = useState("Under $50K");
-  const [companyName, setCompanyName] = useState("");
-  const [companyDescription, setCompanyDescription] = useState("");
-  const [contactEmail, setContactEmail] = useState("");
-  const [contactPhone, setContactPhone] = useState("");
+import apiSignUp from "../services/SignUpService";
+
+const SignUp = () => {
+  const [user, setUser] = useState({
+    username: "user1",
+    email: "email1@abc.com",
+    password: "password1",
+  });
 
   const navigate = useNavigate();
 
   const submitForm = (e) => {
     e.preventDefault();
-
-    const newJob = {
-      title,
-      type,
-      location,
-      description,
-      salary,
-      company: {
-        name: companyName,
-        description: companyDescription,
-        contactEmail,
-        contactPhone,
-      },
-    };
-
-    addJobSubmit(newJob);
-
-    toast.success("Job Added Successfully");
-
-    return navigate("/jobs");
+    toast.info("Signing up...");
+    apiSignUp(user, navigate);
   };
 
   return (
@@ -44,57 +24,67 @@ const SignUp = ({ addJobSubmit }) => {
       <div className="container m-auto max-w-2xl py-24">
         <div className="bg-white px-6 py-8 mb-4 shadow-md rounded-md border m-4 md:m-0">
           <form onSubmit={submitForm}>
-            <h2 className="text-3xl text-center font-semibold mb-6">Log In</h2>
-
+            <h2 className="text-3xl text-center font-semibold mb-6">Sign Up</h2>
             <div className="mb-4">
-              <label className="block text-gray-700 font-bold mb-2">
-                Task Listing Name
+              <label
+                htmlFor="username"
+                className="block text-gray-700 font-bold mb-2"
+              >
+                Username
               </label>
               <input
                 type="text"
-                id="title"
-                name="title"
-                className="border rounded w-full py-2 px-3 mb-2"
-                placeholder="eg. Need help in assembling my ikea furniture"
+                id="username"
+                name="username"
+                className="border rounded w-full py-2 px-3"
+                placeholder="Enter username"
                 required
-                value={title}
-                onChange={(e) => setTitle(e.target.value)}
+                value={user.username}
+                onChange={(e) => {
+                  setUser({ ...user, username: e.target.value });
+                }}
               />
             </div>
 
             <div className="mb-4">
               <label
-                htmlFor="contact_email"
+                htmlFor="email"
                 className="block text-gray-700 font-bold mb-2"
               >
-                Contact Email
+                Email
               </label>
               <input
                 type="email"
-                id="contact_email"
-                name="contact_email"
+                id="email"
+                name="email"
                 className="border rounded w-full py-2 px-3"
-                placeholder="Email address for contact"
+                placeholder="Enter email"
                 required
-                value={contactEmail}
-                onChange={(e) => setContactEmail(e.target.value)}
+                value={user.email}
+                onChange={(e) => {
+                  setUser({ ...user, email: e.target.value });
+                }}
               />
             </div>
+
             <div className="mb-4">
               <label
-                htmlFor="contact_phone"
+                htmlFor="password"
                 className="block text-gray-700 font-bold mb-2"
               >
-                Contact Phone
+                Password
               </label>
               <input
-                type="tel"
-                id="contact_phone"
-                name="contact_phone"
+                type="password"
+                id="password"
+                name="password"
                 className="border rounded w-full py-2 px-3"
-                placeholder="Optional"
-                value={contactPhone}
-                onChange={(e) => setContactPhone(e.target.value)}
+                placeholder="Enter password"
+                required
+                value={user.password}
+                onChange={(e) => {
+                  setUser({ ...user, password: e.target.value });
+                }}
               />
             </div>
 
@@ -103,16 +93,15 @@ const SignUp = ({ addJobSubmit }) => {
                 className="bg-indigo-500 hover:bg-indigo-600 text-white font-bold py-2 px-4 rounded-full w-full focus:outline-none focus:shadow-outline"
                 type="submit"
               >
-                Log In
+                Submit
               </button>
             </div>
-
             <div>
               <button
                 className="bg-gray-500 hover:bg-gray-600 text-white font-bold py-2 px-4 rounded-full w-full focus:outline-none focus:shadow-outline"
-                type="submit"
+                onClick={() => navigate("/login")}
               >
-                Sign Up
+                Log In
               </button>
             </div>
           </form>

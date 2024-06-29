@@ -1,7 +1,7 @@
 import { toast } from "react-toastify";
 import { API_URL } from "../constants/constants";
 
-const apiLogin = (user, setErrors, navigate) => {
+const apiLogin = (user, navigate) => {
   fetch(`${API_URL}/login/`, {
     method: "POST",
     headers: {
@@ -27,7 +27,9 @@ const apiLogin = (user, setErrors, navigate) => {
       toast.success("Logging in successfully");
       navigate(`/`);
     })
-    .catch((error) => setErrors(error.message));
+    .catch((error) => {
+      toast.error(error.message);
+    });
 };
 
 export default apiLogin;

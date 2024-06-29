@@ -1,5 +1,6 @@
 import { useState } from "react";
 import { useNavigate } from "react-router-dom";
+import { toast } from "react-toastify";
 
 import apiLogin from "../services/LoginService";
 
@@ -8,14 +9,13 @@ const LogIn = () => {
     username: "user1",
     password: "password1",
   });
-  const [errors, setErrors] = useState("");
 
   const navigate = useNavigate();
 
   const submitForm = (e) => {
     e.preventDefault();
-    setErrors("Loading...");
-    apiLogin(user, setErrors, navigate);
+    toast.info("Logging in...");
+    apiLogin(user, navigate);
   };
 
   return (
@@ -41,7 +41,6 @@ const LogIn = () => {
                 value={user.username}
                 onChange={(e) => {
                   setUser({ ...user, username: e.target.value });
-                  setErrors("");
                 }}
               />
             </div>
@@ -63,21 +62,16 @@ const LogIn = () => {
                 value={user.password}
                 onChange={(e) => {
                   setUser({ ...user, password: e.target.value });
-                  setErrors("");
                 }}
               />
             </div>
-
-            {errors && (
-              <p className="text-red-500 my-4 font-semibold">{errors}</p>
-            )}
 
             <div className="mb-4">
               <button
                 className="bg-indigo-500 hover:bg-indigo-600 text-white font-bold py-2 px-4 rounded-full w-full focus:outline-none focus:shadow-outline"
                 type="submit"
               >
-                Log In
+                Submit
               </button>
             </div>
             <div>
