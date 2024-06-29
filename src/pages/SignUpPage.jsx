@@ -6,9 +6,9 @@ import apiSignUp from "../services/SignUpService";
 
 const SignUp = () => {
   const [user, setUser] = useState({
-    username: "user1",
-    email: "email1@abc.com",
-    password: "password1",
+    username: "",
+    email: "",
+    password: "",
   });
 
   const navigate = useNavigate();
