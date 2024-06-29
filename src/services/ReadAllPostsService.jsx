@@ -6,14 +6,11 @@ const apiReadPosts = (setPosts) => {
     method: "GET",
     headers: {
       "Content-Type": "application/json",
-      Authorization: `token ${localStorage.getItem("token")}`,
     },
   })
     .then((response) => {
       if (response.ok) {
         return response.json();
-      } else if (response.status === 403) {
-        throw new Error("Forbidden, please login again");
       } else {
         throw new Error("An error occured. Please try again later.");
       }

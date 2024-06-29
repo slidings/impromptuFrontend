@@ -3,15 +3,19 @@ import { API_URL } from "../constants/constants";
 
 const apiDeletePost = (id, navigate) => {
   fetch(`${API_URL}/posts/${id}`, {
-    method: "GET",
+    method: "DELETE",
     headers: {
       "Content-Type": "application/json",
+      Authorization: `token ${localStorage.getItem("token")}`,
     },
     credentials: "include",
   })
     .then((response) => {
       if (response.ok) {
         return response.json();
+      } else if (response.status === 403) {
+        navigate("/login");
+        throw new Error("You do not have permission to update this post.");
       } else if (response.status == 404) {
         throw new Error("Post not found.");
       } else {
@@ -19,7 +23,7 @@ const apiDeletePost = (id, navigate) => {
       }
     })
     .then((data) => {
-      toast.success("Post retrieved successfully.");
+      toast.success("Post deleted successfully.");
     })
     .catch((error) => {
       toast.error(error.message);
