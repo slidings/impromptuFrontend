@@ -1,7 +1,7 @@
 import { toast } from "react-toastify";
 import { API_URL } from "../constants/constants";
 
-const apiDeletePost = (id, navigate) => {
+const apiGetPost = (id, navigate) => {
   fetch(`${API_URL}/posts/${id}`, {
     method: "GET",
     headers: {
@@ -26,4 +26,4 @@ const apiDeletePost = (id, navigate) => {
     });
 };
 
-export default apiDeletePost;
+export default apiGetPost;
