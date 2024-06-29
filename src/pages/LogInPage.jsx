@@ -4,10 +4,10 @@ import { toast } from "react-toastify";
 
 import apiLogin from "../services/LoginService";
 
-const LogIn = () => {
+const LogIn = ({setLoggedIn}) => {
   const [user, setUser] = useState({
-    username: "user1",
-    password: "password1",
+    username: "",
+    password: "",
   });
 
   const navigate = useNavigate();
@@ -15,7 +15,7 @@ const LogIn = () => {
   const submitForm = (e) => {
     e.preventDefault();
     toast.info("Logging in...");
-    apiLogin(user, navigate);
+    apiLogin(user, navigate, setLoggedIn);
   };
 
   return (

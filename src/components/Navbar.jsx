@@ -1,7 +1,16 @@
 import { NavLink } from 'react-router-dom';
 import logo from '../assets/images/logo.png';
+import { useEffect, useState } from 'react'; // Import useEffect and useState\
 
 const Navbar = () => {
+  const [username, setUsername] = useState('');
+
+  useEffect(() => {
+    // Fetch username from local storage when component mounts
+    const storedUsername = localStorage.getItem('username');
+    setUsername(storedUsername);
+  }, []); // Empty dependency array ensures this effect runs only once on mount
+
   const linkClass = ({ isActive }) =>
     isActive
       ? 'bg-black text-white hover:bg-gray-900 hover:text-white rounded-md px-3 py-2'
@@ -15,7 +24,7 @@ const Navbar = () => {
             <NavLink className='flex flex-shrink-0 items-center mr-4' to='/'>
               <img className='h-10 w-auto' src={logo} alt='React Jobs' />
               <span className='hidden md:block text-white text-2xl font-bold ml-2'>
-                Impromptu
+                Welcome Back {username ? `${username}` : ''} to Impromptu
               </span>
             </NavLink>
             <div className='md:ml-auto'>

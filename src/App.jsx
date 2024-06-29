@@ -11,11 +11,13 @@ import NotFoundPage from "./pages/NotFoundPage";
 import JobPage, { jobLoader } from "./pages/JobPage";
 import AddJobPage from "./pages/AddJobPage";
 import EditJobPage from "./pages/EditJobPage";
-import { useState } from "react";
 import LogIn from "./pages/LogInPage";
 import SignUp from "./pages/SignUpPage";
+import { useState } from "react";
 
 const App = () => {
+  const [loggedIn, setLoggedIn] = useState(false);
+
   // Add New Job
   const addJob = async (newJob) => {
     const res = await fetch("/api/jobs", {
@@ -48,26 +50,28 @@ const App = () => {
     return;
   };
 
-  const [loggedIn, setLoggedIn] = useState(false);
-
   const router = createBrowserRouter(
     createRoutesFromElements(
       <Route path="/" element={<MainLayout />}>
-        <Route index element={<HomePage />} />
-        <Route path="/jobs" element={<JobsPage />} />
-        <Route path="/login" element={<LogIn />} />
+        {!loggedIn && <Route path="/" element={<LogIn setLoggedIn={setLoggedIn} />} />}
+        {loggedIn && (
+          <>
+            <Route index element={<HomePage />} />
+            <Route path="/jobs" element={<JobsPage />} />
+            <Route path="/add-job" element={<AddJobPage addJobSubmit={addJob} />} />
+            <Route
+              path="/edit-job/:id"
+              element={<EditJobPage updateJobSubmit={updateJob} />}
+              loader={jobLoader}
+            />
+            <Route
+              path="/jobs/:id"
+              element={<JobPage deleteJob={deleteJob} />}
+              loader={jobLoader}
+            />
+          </>
+        )}
         <Route path="/signup" element={<SignUp />} />
-        <Route path="/add-job" element={<AddJobPage addJobSubmit={addJob} />} />
-        <Route
-          path="/edit-job/:id"
-          element={<EditJobPage updateJobSubmit={updateJob} />}
-          loader={jobLoader}
-        />
-        <Route
-          path="/jobs/:id"
-          element={<JobPage deleteJob={deleteJob} />}
-          loader={jobLoader}
-        />
         <Route path="*" element={<NotFoundPage />} />
       </Route>
     )
@@ -75,4 +79,5 @@ const App = () => {
 
   return <RouterProvider router={router} />;
 };
+
 export default App;
