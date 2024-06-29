@@ -14,7 +14,7 @@ const LogIn = () => {
 
   const submitForm = (e) => {
     e.preventDefault();
-    console.log(user);
+    setErrors("Loading...");
     apiLogin(user, setErrors, navigate);
   };
 
@@ -39,7 +39,10 @@ const LogIn = () => {
                 placeholder="Enter username"
                 required
                 value={user.username}
-                onChange={(e) => setUser({ ...user, username: e.target.value })}
+                onChange={(e) => {
+                  setUser({ ...user, username: e.target.value });
+                  setErrors("");
+                }}
               />
             </div>
 
@@ -58,7 +61,10 @@ const LogIn = () => {
                 placeholder="Enter password"
                 required
                 value={user.password}
-                onChange={(e) => setUser({ ...user, password: e.target.value })}
+                onChange={(e) => {
+                  setUser({ ...user, password: e.target.value });
+                  setErrors("");
+                }}
               />
             </div>
 
