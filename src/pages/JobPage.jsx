@@ -105,6 +105,7 @@ const JobPage = ({ deleteJob }) => {
   );
 };
 
+// call api directly 
 const jobLoader = async ({ params }) => {
   const res = await apiGetPost(params.id);
   return res;
