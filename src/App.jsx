@@ -16,7 +16,7 @@ import SignUp from "./pages/SignUpPage";
 import { useState } from "react";
 
 const App = () => {
-  const [loggedIn, setLoggedIn] = useState(false);
+  const [loggedIn, setLoggedIn] = useState(!!localStorage.getItem("token"));
 
   // Add New Job
   const addJob = async (newJob) => {
@@ -53,12 +53,17 @@ const App = () => {
   const router = createBrowserRouter(
     createRoutesFromElements(
       <Route path="/" element={<MainLayout />}>
-        {!loggedIn && <Route path="/" element={<LogIn setLoggedIn={setLoggedIn} />} />}
+        {!loggedIn && (
+          <Route path="/" element={<LogIn setLoggedIn={setLoggedIn} />} />
+        )}
         {loggedIn && (
           <>
             <Route index element={<HomePage />} />
             <Route path="/jobs" element={<JobsPage />} />
-            <Route path="/add-job" element={<AddJobPage addJobSubmit={addJob} />} />
+            <Route
+              path="/add-job"
+              element={<AddJobPage addJobSubmit={addJob} />}
+            />
             <Route
               path="/edit-job/:id"
               element={<EditJobPage updateJobSubmit={updateJob} />}
