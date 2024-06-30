@@ -1,7 +1,7 @@
 import { useState, useEffect } from "react";
 import JobListing from "./JobListing";
 import Spinner from "./Spinner";
-import apiReadPosts from "../services/ReadAllPostsService";
+import apiReadPosts from "../services/GetAllPostsService";
 
 const JobListings = ({ isHome = false }) => {
   const [jobs, setJobs] = useState([]);
