@@ -76,6 +76,7 @@ const App = () => {
             />
           </>
         )}
+        <Route path="/login" element={<LogIn setLoggedIn={setLoggedIn} />} />
         <Route path="/signup" element={<SignUp />} />
         <Route path="*" element={<NotFoundPage />} />
       </Route>

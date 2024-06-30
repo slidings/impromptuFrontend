@@ -22,8 +22,9 @@ const apiSignUp = (user, navigate) => {
       }
     })
     .then((data) => {
-      localStorage.setItem("username", data.user.username);
       localStorage.setItem("token", data.token);
+      localStorage.setItem("username", data.user.username);
+      localStorage.setItem("id", data.user.id);
       toast.success("Sign up successful");
       navigate("/");
     })

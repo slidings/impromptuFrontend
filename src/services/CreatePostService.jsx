@@ -2,11 +2,12 @@ import { toast } from "react-toastify";
 import { API_URL } from "../constants/constants";
 
 const apiCreatePost = (data, navigate) => {
+  console.log(localStorage.getItem("token"));
   fetch(`${API_URL}/posts/`, {
     method: "POST",
     headers: {
       "Content-Type": "application/json",
-      Authorization: `token ${localStorage.getItem("token")}`,
+      Authorization: `Token ${localStorage.getItem("token")}`,
     },
     body: JSON.stringify(data),
     credentials: "include",
@@ -31,7 +32,7 @@ const apiCreatePost = (data, navigate) => {
     })
     .then((data) => {
       toast.success("Post creataed successfully.");
-      navigate(`/jobs/${data.thread.id}`); // Redirect to the post page
+      navigate(`/jobs/${data.id}`); // Redirect to the post page
     })
     .catch((error) => {
       toast.error(error.message);

@@ -22,9 +22,10 @@ const apiLogin = (user, navigate, setLoggedIn) => {
       }
     })
     .then((data) => {
-      localStorage.setItem("jwt", data.jwt);
-      localStorage.setItem("username", user.username);
-      localStorage.setItem("usernanme", user.id);
+      console.log(data.token);
+      localStorage.setItem("token", data.token);
+      localStorage.setItem("username", data.user.username);
+      localStorage.setItem("id", data.user.id);
       toast.success("Logging in successfully");
       setLoggedIn(true);
       navigate("/"); // Navigate to home page upon successful login
