@@ -24,6 +24,7 @@ const apiLogin = (user, navigate, setLoggedIn) => {
     .then((data) => {
       localStorage.setItem("jwt", data.jwt);
       localStorage.setItem("username", user.username);
+      localStorage.setItem("usernanme", user.id);
       toast.success("Logging in successfully");
       setLoggedIn(true);
       navigate("/"); // Navigate to home page upon successful login
