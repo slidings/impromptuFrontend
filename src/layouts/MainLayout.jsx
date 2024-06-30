@@ -1,12 +1,12 @@
-import { Outlet } from 'react-router-dom';
-import { ToastContainer } from 'react-toastify';
-import 'react-toastify/dist/ReactToastify.css';
-import Navbar from '../components/Navbar';
+import { Outlet } from "react-router-dom";
+import { ToastContainer } from "react-toastify";
+import "react-toastify/dist/ReactToastify.css";
+import Navbar from "../components/Navbar";
 
-const MainLayout = () => {
+const MainLayout = ({ loggedIn, setLoggedIn }) => {
   return (
     <>
-      <Navbar />
+      <Navbar loggedIn={loggedIn} setLoggedIn={setLoggedIn} />
       <Outlet />
       <ToastContainer />
     </>

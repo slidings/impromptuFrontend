@@ -18,18 +18,6 @@ import { useState } from "react";
 const App = () => {
   const [loggedIn, setLoggedIn] = useState(!!localStorage.getItem("token"));
 
-  // Add New Job
-  const addJob = async (newJob) => {
-    const res = await fetch("/api/jobs", {
-      method: "POST",
-      headers: {
-        "Content-Type": "application/json",
-      },
-      body: JSON.stringify(newJob),
-    });
-    return;
-  };
-
   // Delete Job
   const deleteJob = async (id) => {
     const res = await fetch(`/api/jobs/${id}`, {
@@ -52,7 +40,10 @@ const App = () => {
 
   const router = createBrowserRouter(
     createRoutesFromElements(
-      <Route path="/" element={<MainLayout />}>
+      <Route
+        path="/"
+        element={<MainLayout loggedIn={loggedIn} setLoggedIn={setLoggedIn} />}
+      >
         {!loggedIn && (
           <Route path="/" element={<LogIn setLoggedIn={setLoggedIn} />} />
         )}
@@ -60,10 +51,7 @@ const App = () => {
           <>
             <Route index element={<HomePage />} />
             <Route path="/jobs" element={<JobsPage />} />
-            <Route
-              path="/add-job"
-              element={<AddJobPage addJobSubmit={addJob} />}
-            />
+            <Route path="/add-job" element={<AddJobPage />} />
             <Route
               path="/edit-job/:id"
               element={<EditJobPage updateJobSubmit={updateJob} />}
