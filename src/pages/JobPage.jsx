@@ -2,6 +2,7 @@ import { useParams, useLoaderData, useNavigate } from 'react-router-dom';
 import { FaArrowLeft, FaMapMarker } from 'react-icons/fa';
 import { Link } from 'react-router-dom';
 import { toast } from 'react-toastify';
+import apiGetPost from '../services/GetPostService';
 
 const JobPage = ({ deleteJob }) => {
   const navigate = useNavigate();
@@ -62,23 +63,23 @@ const JobPage = ({ deleteJob }) => {
               <div className='bg-white p-6 rounded-lg shadow-md'>
                 <h3 className='text-xl font-bold mb-6'>Contact Info</h3>
 
-                <h2 className='text-2xl'>{job.company.name}</h2>
+                <h2 className='text-2xl'>{job.name}</h2>
 
-                <p className='my-2'>{job.company.description}</p>
+                <p className='my-2'>{job.additional_info}</p>
 
                 <hr className='my-4' />
 
                 <h3 className='text-xl'>Contact Email:</h3>
 
                 <p className='my-2 bg-indigo-100 p-2 font-bold'>
-                  {job.company.contactEmail}
+                  {job.email}
                 </p>
 
                 <h3 className='text-xl'>Contact Phone:</h3>
 
                 <p className='my-2 bg-indigo-100 p-2 font-bold'>
                   {' '}
-                  {job.company.contactPhone}
+                  {job.phone}
                 </p>
               </div>
 
@@ -106,9 +107,10 @@ const JobPage = ({ deleteJob }) => {
 };
 
 const jobLoader = async ({ params }) => {
-  const res = await fetch(`/api/jobs/${params.id}`);
-  const data = await res.json();
-  return data;
+  const res = apiGetPost(params.id);
+  return res
 };
+
+
 
 export { JobPage as default, jobLoader };

@@ -1,6 +1,7 @@
 import { useState, useEffect } from 'react';
 import JobListing from './JobListing';
 import Spinner from './Spinner';
+import apiReadPosts from '../services/GetPostService';
 
 const JobListings = ({ isHome = false }) => {
   const [jobs, setJobs] = useState([]);
@@ -8,11 +9,8 @@ const JobListings = ({ isHome = false }) => {
 
   useEffect(() => {
     const fetchJobs = async () => {
-      const apiUrl = isHome ? '/api/jobs?_limit=3' : '/api/jobs';
       try {
-        const res = await fetch(apiUrl);
-        const data = await res.json();
-        setJobs(data);
+        apiReadPosts(setJobs);
       } catch (error) {
         console.log('Error fetching data', error);
       } finally {
@@ -43,4 +41,5 @@ const JobListings = ({ isHome = false }) => {
     </section>
   );
 };
+
 export default JobListings;

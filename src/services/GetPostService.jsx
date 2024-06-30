@@ -1,7 +1,7 @@
 import { toast } from "react-toastify";
 import { API_URL } from "../constants/constants";
 
-const apiGetPost = (id, navigate) => {
+const apiGetPost = (id) => {
   fetch(`${API_URL}/posts/${id}`, {
     method: "GET",
     headers: {
@@ -11,6 +11,7 @@ const apiGetPost = (id, navigate) => {
   })
     .then((response) => {
       if (response.ok) {
+        console.log("gotpost")
         return response.json();
       } else if (response.status == 404) {
         throw new Error("Post not found.");

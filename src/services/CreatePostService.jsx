@@ -38,4 +38,4 @@ const apiCreatePost = (data, navigate) => {
     });
 };
 
-export default apiLogin;
+export default apiCreatePost;
