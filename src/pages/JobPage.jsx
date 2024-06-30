@@ -3,10 +3,12 @@ import { FaArrowLeft, FaMapMarker } from 'react-icons/fa';
 import { Link } from 'react-router-dom';
 import { toast } from 'react-toastify';
 import apiGetPost from '../services/GetPostService';
+import apiDeletePost from '../services/DeletePostService';
 
-const JobPage = ({ deleteJob }) => {
+const JobPage = ({ deleteJob = apiDeletePost}) => {
   const navigate = useNavigate();
-  const id = localStorage.getItem("id");
+  //const id = localStorage.getItem("id");
+  const id = 8;
   const job = useLoaderData();
 
   const onDeleteClick = (jobId) => {

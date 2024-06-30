@@ -31,7 +31,7 @@ const apiCreatePost = (data, navigate) => {
       }
     })
     .then((data) => {
-      toast.success("Post creataed successfully.");
+      toast.success("Post created successfully.");
       navigate(`/jobs/${data.id}`); // Redirect to the post page
     })
     .catch((error) => {

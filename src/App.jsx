@@ -29,13 +29,6 @@ function ProtectedRoute({ children, loggedIn }) {
 const App = () => {
   const [loggedIn, setLoggedIn] = useState(!!localStorage.getItem("token"));
 
-  // Delete Job
-  const deleteJob = async (id) => {
-    const res = await fetch(`/api/jobs/${id}`, {
-      method: "DELETE",
-    });
-    return;
-  };
 
   // Update Job
   const updateJob = async (job) => {
@@ -79,7 +72,7 @@ const App = () => {
             path="/jobs/:id"
             element={
               <ProtectedRoute loggedIn={loggedIn}>
-                <JobPage deleteJob={deleteJob} />
+                <JobPage />
               </ProtectedRoute>
             }
             loader={jobLoader}
