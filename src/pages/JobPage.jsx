@@ -9,6 +9,8 @@ const JobPage = () => {
   const navigate = useNavigate();
   const id = localStorage.getItem("id");
   const job = useLoaderData();
+  const description = job.description || "";
+  const additional_info = job.additional_info || "";
 
   const onDeleteClick = (jobId) => {
     const confirm = window.confirm(
@@ -51,7 +53,7 @@ const JobPage = () => {
                   Task Description
                 </h3>
                 <p className="mb-4">
-                  {job.description.split("\n").map((line, index) => (
+                  {description.split("\n").map((line, index) => (
                     <React.Fragment key={index}>
                       {line}
                       <br />
@@ -69,7 +71,7 @@ const JobPage = () => {
                 <h2 className="text-2xl">{job.name}</h2>
 
                 <p className="my-2">
-                  {job.additional_info.split("\n").map((line, index) => (
+                  {additional_info.split("\n").map((line, index) => (
                     <React.Fragment key={index}>
                       {line}
                       <br />
