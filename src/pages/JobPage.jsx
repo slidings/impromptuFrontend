@@ -1,7 +1,7 @@
 import { useParams, useLoaderData, useNavigate } from "react-router-dom";
 import { FaArrowLeft, FaMapMarker } from "react-icons/fa";
 import { Link } from "react-router-dom";
-import { toast } from "react-toastify";
+import React from "react";
 import apiGetPost from "../services/GetPostService";
 import apiDeletePost from "../services/DeletePostService";
 
@@ -50,7 +50,14 @@ const JobPage = () => {
                 <h3 className="text-indigo-800 text-lg font-bold mb-6">
                   Task Description
                 </h3>
-                <p className="mb-4">{job.description}</p>
+                <p className="mb-4">
+                  {job.description.split("\n").map((line, index) => (
+                    <React.Fragment key={index}>
+                      {line}
+                      <br />
+                    </React.Fragment>
+                  ))}
+                </p>
               </div>
             </main>
 
@@ -61,7 +68,14 @@ const JobPage = () => {
 
                 <h2 className="text-2xl">{job.name}</h2>
 
-                <p className="my-2">{job.additional_info}</p>
+                <p className="my-2">
+                  {job.additional_info.split("\n").map((line, index) => (
+                    <React.Fragment key={index}>
+                      {line}
+                      <br />
+                    </React.Fragment>
+                  ))}
+                </p>
 
                 <hr className="my-4" />
 

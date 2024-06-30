@@ -17,7 +17,7 @@ const AddJobPage = () => {
   );
   const [email, setemail] = useState("johndoe@example.com");
   const [phone, setphone] = useState("123-456-7890");
-  const [date, setDate] = useState(new Date().toISOString().slice(0, 16));
+  const [date, setDate] = useState();
 
   const navigate = useNavigate();
 
@@ -125,7 +125,7 @@ const AddJobPage = () => {
                 htmlFor="event_datetime"
                 className="block text-gray-700 font-bold mb-2"
               >
-                Tasak Date & Time
+                Task Date & Time
               </label>
               <input
                 type="datetime-local"

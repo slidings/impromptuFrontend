@@ -1,19 +1,28 @@
 import { useState } from "react";
-import { useParams, useLoaderData, useNavigate } from "react-router-dom";
-import { toast } from "react-toastify";
+import { useLoaderData, useNavigate } from "react-router-dom";
+import apiUpdatePost from "../services/UpdatePostService";
 
-const EditJobPage = ({ updateJobSubmit }) => {
+const EditJobPage = () => {
   const job = useLoaderData();
-  const [title, setTitle] = useState(job.title);
-  const [type, setType] = useState(job.type);
-  const [location, setLocation] = useState(job.location);
-  const [description, setDescription] = useState(job.description);
-  const [name, setname] = useState(job.name);
-  const [additional_info, setadditional_info] = useState(job.company.name);
-  const [email, setemail] = useState(job.company.description);
-  const [phone, setphone] = useState(job.company.phone);
-  const [date, setdate] = useState(job.company.date);
-
+  const [title, setTitle] = useState(job.title || "");
+  const [type, setType] = useState(job.type || "");
+  const [location, setLocation] = useState(job.location || "");
+  const [description, setDescription] = useState(job.description || "");
+  const [name, setName] = useState(job.name || "");
+  const [additional_info, setAdditional_info] = useState(
+    job.additional_info || ""
+  );
+  const [email, setEmail] = useState(job.email || "");
+  const [phone, setPhone] = useState(job.phone || "");
+  let job_date = job.date;
+  if (job_date) {
+    const dateObj = new Date(job.date);
+    const formattedDate = dateObj.toISOString().slice(0, 16); // "YYYY-MM-DDTHH:mm"
+    job_date = formattedDate;
+  } else {
+    job_date = "";
+  }
+  const [date, setDate] = useState(job_date);
   const navigate = useNavigate();
 
   const submitForm = (e) => {
@@ -29,9 +38,10 @@ const EditJobPage = ({ updateJobSubmit }) => {
       email,
       phone,
       date,
+      id: job.id,
     };
 
-    apiCreatePost(data, navigate);
+    apiUpdatePost(data, navigate);
   };
 
   return (
@@ -114,6 +124,25 @@ const EditJobPage = ({ updateJobSubmit }) => {
               />
             </div>
 
+            {/* Add datetime field here */}
+            <div className="mb-4">
+              <label
+                htmlFor="event_datetime"
+                className="block text-gray-700 font-bold mb-2"
+              >
+                Task Date & Time
+              </label>
+              <input
+                type="datetime-local"
+                id="event_datetime"
+                name="event_datetime"
+                className="border rounded w-full py-2 px-3"
+                required
+                value={date}
+                onChange={(e) => setDate(e.target.value)}
+              />
+            </div>
+
             <h3 className="text-2xl mb-5">Contact Info</h3>
 
             <div className="mb-4">
@@ -129,8 +158,8 @@ const EditJobPage = ({ updateJobSubmit }) => {
                 name="company"
                 className="border rounded w-full py-2 px-3"
                 placeholder="Name"
-                value={additional_info}
-                onChange={(e) => setadditional_info(e.target.value)}
+                value={name}
+                onChange={(e) => setName(e.target.value)}
               />
             </div>
 
@@ -147,8 +176,8 @@ const EditJobPage = ({ updateJobSubmit }) => {
                 className="border rounded w-full py-2 px-3"
                 rows="4"
                 placeholder="Eg. Alternate ways to contact"
-                value={email}
-                onChange={(e) => setemail(e.target.value)}
+                value={additional_info}
+                onChange={(e) => setAdditional_info(e.target.value)}
               ></textarea>
             </div>
 
@@ -166,8 +195,8 @@ const EditJobPage = ({ updateJobSubmit }) => {
                 className="border rounded w-full py-2 px-3"
                 placeholder="Email address for contact"
                 required
-                value={phone}
-                onChange={(e) => setphone(e.target.value)}
+                value={email}
+                onChange={(e) => setEmail(e.target.value)}
               />
             </div>
             <div className="mb-4">
@@ -183,8 +212,8 @@ const EditJobPage = ({ updateJobSubmit }) => {
                 name="contact_phone"
                 className="border rounded w-full py-2 px-3"
                 placeholder="Optional"
-                value={date}
-                onChange={(e) => setdate(e.target.value)}
+                value={phone}
+                onChange={(e) => setPhone(e.target.value)}
               />
             </div>
 

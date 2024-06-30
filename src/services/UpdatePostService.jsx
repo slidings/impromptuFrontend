@@ -2,7 +2,7 @@ import { toast } from "react-toastify";
 import { API_URL } from "../constants/constants";
 
 const apiUpdatePost = (data, navigate) => {
-  fetch(`${API_URL}/posts/${data.id}`, {
+  fetch(`${API_URL}/posts/${data.id}/`, {
     method: "PUT",
     headers: {
       "Content-Type": "application/json",
@@ -33,6 +33,7 @@ const apiUpdatePost = (data, navigate) => {
     })
     .then((data) => {
       toast.success("Post updated successfully.");
+      navigate(`/jobs/${data.id}`); // Redirect to the post page
     })
     .catch((error) => {
       toast.error(error.message);
