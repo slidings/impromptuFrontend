@@ -53,7 +53,6 @@ const JobPage = ({ deleteJob }) => {
                 <h3 className='text-indigo-800 text-lg font-bold mb-6'>
                   Task Description
                 </h3>
-
                 <p className='mb-4'>{job.description}</p>
               </div>
             </main>
@@ -107,8 +106,8 @@ const JobPage = ({ deleteJob }) => {
 };
 
 const jobLoader = async ({ params }) => {
-  const res = apiGetPost(params.id);
-  return res
+  const res = await apiGetPost(params.id);
+  return res;
 };
 
 
