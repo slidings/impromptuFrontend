@@ -29,7 +29,6 @@ function ProtectedRoute({ children, loggedIn }) {
 const App = () => {
   const [loggedIn, setLoggedIn] = useState(!!localStorage.getItem("token"));
 
-
   // Update Job
   const updateJob = async (job) => {
     const res = await fetch(`/api/jobs/${job.id}`, {
@@ -80,7 +79,8 @@ const App = () => {
         </>
         <Route path="/login" element={<LogIn setLoggedIn={setLoggedIn} />} />
         <Route path="/signup" element={<SignUp />} />
-        <Route path="*" element={<NotFoundPage />} />
+        <Route path="/404-Not-Found" element={<NotFoundPage />} />
+        <Route path="" element={<NotFoundPage />} />
       </Route>
     )
   );
