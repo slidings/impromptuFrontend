@@ -1,25 +1,19 @@
 # React Jobs Project (YouTube)
 
-This is the jobs listing project from the [YouTube crash course](https://youtu.be/LDB4uaJ87e0).
+This is the jobs listing project for Orbital 2024.
+
+Built with react.js and tailwind CSS
+
+Link to Deployed App: https://impromptu-frontend-f9cf.vercel.app/
+
+Creators: Ng Ze Rui, Samuel Lim
 
 <img src="public/screen.png" />
-
-## Usage
-
-This project uses JSON-Server for a mock backend.
 
 ### Install Dependencies
 
 ```bash
 npm install
-```
-
-### Run JSON Server
-
-The server will run on http://localhost:8000
-
-```bash
-npm run server
 ```
 
 ### Run Vite Frontend
