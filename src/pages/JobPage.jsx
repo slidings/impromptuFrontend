@@ -1,5 +1,5 @@
 import { useParams, useLoaderData, useNavigate } from "react-router-dom";
-import { FaArrowLeft, FaMapMarker } from "react-icons/fa";
+import { FaArrowLeft, FaMapMarker, FaFlag } from "react-icons/fa";
 import { Link } from "react-router-dom";
 import React from "react";
 import apiGetPost from "../services/GetPostService";
@@ -90,7 +90,7 @@ const JobPage = () => {
                 <p className="my-2 bg-indigo-100 p-2 font-bold"> {job.phone}</p>
               </div>
 
-              {job.user == id && (
+              {job.user == id ? (
                 <div className="bg-white p-6 rounded-lg shadow-md mt-6">
                   <h3 className="text-xl font-bold mb-6">Manage Task</h3>
                   <Link
@@ -104,6 +104,19 @@ const JobPage = () => {
                     className="bg-red-500 hover:bg-red-600 text-white font-bold py-2 px-4 rounded-full w-full focus:outline-none focus:shadow-outline mt-4 block"
                   >
                     Delete Task
+                  </button>
+                </div>
+              ) : (
+                <div className="bg-white p-5 rounded-lg shadow-md mt-6">
+                  <button
+                    onClick={() => {
+                      // Handle report action here
+                      alert("Reported as inappropriate");
+                    }}
+                    className="bg-red-500 hover:bg-red-600 text-white font-bold py-2 px-4 rounded-full w-full focus:outline-none focus:shadow-outline mt-4 flex items-center justify-center"
+                  >
+                    <FaFlag className="mr-2" />
+                    Report as inappropriate
                   </button>
                 </div>
               )}
