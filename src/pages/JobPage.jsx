@@ -4,6 +4,7 @@ import { Link } from "react-router-dom";
 import React from "react";
 import apiGetPost from "../services/GetPostService";
 import apiDeletePost from "../services/DeletePostService";
+import Map from "../components/Map";
 
 const JobPage = () => {
   const navigate = useNavigate();
@@ -61,6 +62,7 @@ const JobPage = () => {
                   ))}
                 </p>
               </div>
+              <Map location = {job.location} />
             </main>
 
             {/* <!-- Sidebar --> */}
