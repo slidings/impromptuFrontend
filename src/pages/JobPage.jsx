@@ -1,12 +1,16 @@
 import { useParams, useLoaderData, useNavigate } from "react-router-dom";
 import { FaArrowLeft, FaMapMarker, FaFlag } from "react-icons/fa";
 import { Link } from "react-router-dom";
-import React from "react";
+import React, { useState } from "react";
 import apiGetPost from "../services/GetPostService";
 import apiDeletePost from "../services/DeletePostService";
 import Map from "../components/Map";
+import SearchBox from "../components/SearchBox";
+import Maps from "../components/Maps";
 
 const JobPage = () => {
+  // for initiating selection maps
+  const [selectPosition, setSelectPosition] = useState(null);
   const navigate = useNavigate();
   const id = localStorage.getItem("id");
   const job = useLoaderData();
@@ -22,6 +26,14 @@ const JobPage = () => {
 
     apiDeletePost(jobId, navigate);
   };
+
+  // Function to extract the location name without coordinates
+  const extractLocationName = (location) => {
+    const matches = location.match(/^(.*)\(\d+(\.\d+)?,\s?\d+(\.\d+)?\)$/);
+    return matches ? matches[1].trim() : location;
+  };
+
+  const locationName = extractLocationName(job.location);
 
   return (
     <>
@@ -45,7 +57,7 @@ const JobPage = () => {
                 <h1 className="text-3xl font-bold mb-4">{job.title}</h1>
                 <div className="text-gray-500 mb-4 flex align-middle justify-center md:justify-start">
                   <FaMapMarker className="text-orange-700 mr-1" />
-                  <p className="text-orange-700">{job.location}</p>
+                  <p className="text-orange-700">{locationName}</p>
                 </div>
               </div>
 
@@ -62,7 +74,7 @@ const JobPage = () => {
                   ))}
                 </p>
               </div>
-              <Map location = {job.location} />
+              <Map location={job.location} />
             </main>
 
             {/* <!-- Sidebar --> */}
