@@ -1,4 +1,6 @@
-# This is the jobs listing project for Orbital 2024.
+# React Jobs Project (YouTube)
+
+This is the jobs listing project for Orbital 2024.
 
 Built with react.js and tailwind CSS
 
