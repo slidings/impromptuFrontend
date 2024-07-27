@@ -1,4 +1,4 @@
-# This is the jobs listing project for Orbital 2024.
+# Tasks listing project for Orbital 2024.
 
 Built with react.js and tailwind CSS
 
