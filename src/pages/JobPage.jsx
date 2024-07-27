@@ -2,47 +2,47 @@ import { useParams, useLoaderData, useNavigate } from "react-router-dom";
 import { FaArrowLeft, FaMapMarker, FaFlag } from "react-icons/fa";
 import { Link } from "react-router-dom";
 import React, { useState } from "react";
+import { format } from "date-fns";
 import apiGetPost from "../services/GetPostService";
 import apiDeletePost from "../services/DeletePostService";
 import Map from "../components/Map";
-import SearchBox from "../components/SearchBox";
-import Maps from "../components/Maps";
 
 const JobPage = () => {
-  // for initiating selection maps
   const [selectPosition, setSelectPosition] = useState(null);
   const navigate = useNavigate();
   const id = localStorage.getItem("id");
+  const isStaff = localStorage.getItem("is_staff") === 'true'; // Retrieve and parse is_staff
   const job = useLoaderData();
   const description = job.description || "";
   const additional_info = job.additional_info || "";
 
   const onDeleteClick = (jobId) => {
-    const confirm = window.confirm(
-      "Are you sure you want to delete this listing?"
-    );
+    const confirm = window.confirm("Are you sure you want to delete this listing?");
 
     if (!confirm) return;
 
     apiDeletePost(jobId, navigate);
   };
 
-  // Function to extract the location name without coordinates
-  const extractLocationName = (location) => {
-    const matches = location.match(/^(.*)\(\d+(\.\d+)?,\s?\d+(\.\d+)?\)$/);
-    return matches ? matches[1].trim() : location;
+  const onReportClick = () => {
+    const confirm = window.confirm("Abuse of the report function may lead to a suspension of your account. Continue to report?");
+
+    if (confirm) {
+      // Handle report action here
+      alert("Reported as inappropriate");
+    }
   };
 
-  const locationName = extractLocationName(job.location);
+  const locationName = job.location;
+
+  // Format the date and time
+  const formattedDate = job.date ? format(new Date(job.date), "PPpp") : "";
 
   return (
     <>
       <section>
         <div className="container m-auto py-6 px-6">
-          <Link
-            to="/jobs"
-            className="text-indigo-500 hover:text-indigo-600 flex items-center"
-          >
+          <Link to="/jobs" className="text-indigo-500 hover:text-indigo-600 flex items-center">
             <FaArrowLeft className="mr-2" /> Back to Listings
           </Link>
         </div>
@@ -59,12 +59,15 @@ const JobPage = () => {
                   <FaMapMarker className="text-orange-700 mr-1" />
                   <p className="text-orange-700">{locationName}</p>
                 </div>
+                {formattedDate && (
+                  <div className="text-gray-500 mb-4">
+                    <strong>Task Date & Time: </strong>{formattedDate}
+                  </div>
+                )}
               </div>
 
               <div className="bg-white p-6 rounded-lg shadow-md mt-6">
-                <h3 className="text-indigo-800 text-lg font-bold mb-6">
-                  Task Description
-                </h3>
+                <h3 className="text-indigo-800 text-lg font-bold mb-6">Task Description</h3>
                 <p className="mb-4">
                   {description.split("\n").map((line, index) => (
                     <React.Fragment key={index}>
@@ -74,15 +77,16 @@ const JobPage = () => {
                   ))}
                 </p>
               </div>
-              <Map location={job.location} />
+              <Map latitude={job.latitude} longitude={job.longitude} location={job.location} />
             </main>
 
-            {/* <!-- Sidebar --> */}
             <aside>
               <div className="bg-white p-6 rounded-lg shadow-md">
                 <h3 className="text-xl font-bold mb-6">Contact Info</h3>
 
-                <h2 className="text-2xl">{job.name}</h2>
+                <div className="text-center md:text-left mb-6">
+                  <p className="text-xl text-gray-600">{job.name}</p>
+                </div>
 
                 <p className="my-2">
                   {additional_info.split("\n").map((line, index) => (
@@ -96,21 +100,16 @@ const JobPage = () => {
                 <hr className="my-4" />
 
                 <h3 className="text-xl">Contact Email:</h3>
-
                 <p className="my-2 bg-indigo-100 p-2 font-bold">{job.email}</p>
 
                 <h3 className="text-xl">Contact Phone:</h3>
-
-                <p className="my-2 bg-indigo-100 p-2 font-bold"> {job.phone}</p>
+                <p className="my-2 bg-indigo-100 p-2 font-bold">{job.phone}</p>
               </div>
 
-              {job.user == id ? (
+              {job.user == id || isStaff ? (
                 <div className="bg-white p-6 rounded-lg shadow-md mt-6">
                   <h3 className="text-xl font-bold mb-6">Manage Task</h3>
-                  <Link
-                    to={`/edit-job/${job.id}`}
-                    className="bg-indigo-500 hover:bg-indigo-600 text-white text-center font-bold py-2 px-4 rounded-full w-full focus:outline-none focus:shadow-outline mt-4 block"
-                  >
+                  <Link to={`/edit-job/${job.id}`} className="bg-indigo-500 hover:bg-indigo-600 text-white text-center font-bold py-2 px-4 rounded-full w-full focus:outline-none focus:shadow-outline mt-4 block">
                     Edit Task
                   </Link>
                   <button
@@ -123,10 +122,7 @@ const JobPage = () => {
               ) : (
                 <div className="bg-white p-5 rounded-lg shadow-md mt-6">
                   <button
-                    onClick={() => {
-                      // Handle report action here
-                      alert("Reported as inappropriate");
-                    }}
+                    onClick={onReportClick}
                     className="bg-red-500 hover:bg-red-600 text-white font-bold py-2 px-4 rounded-full w-full focus:outline-none focus:shadow-outline mt-4 flex items-center justify-center"
                   >
                     <FaFlag className="mr-2" />

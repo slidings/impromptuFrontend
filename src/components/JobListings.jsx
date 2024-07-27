@@ -10,7 +10,10 @@ const JobListings = ({ isHome = false }) => {
   useEffect(() => {
     const fetchJobs = async () => {
       try {
-        apiReadPosts(setJobs);
+        apiReadPosts((fetchedJobs) => {
+          const sortedJobs = fetchedJobs.sort((a, b) => b.id - a.id); // Sort jobs by id in descending order
+          setJobs(sortedJobs);
+        });
       } catch (error) {
         console.log("Error fetching data", error);
       } finally {
