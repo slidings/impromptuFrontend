@@ -8,17 +8,13 @@ import apiCreatePost from "../services/CreatePostService";
 const AddJobPage = () => {
   const [selectPosition, setSelectPosition] = useState(null);
   const [type, setType] = useState("Request");
-  const [title, setTitle] = useState("Senior Frontend Developer");
-  const [description, setDescription] = useState(
-    "Looking for a senior frontend developer with 5+ years of experience in React."
-  );
-  const [name, setName] = useState("John Doe");
-  const [additional_info, setAdditionalInfo] = useState(
-    "This is a full-time position with competitive salary."
-  );
-  const [email, setEmail] = useState("johndoe@example.com");
-  const [phone, setPhone] = useState("123-456-7890");
-  const [date, setDate] = useState();
+  const [title, setTitle] = useState("");
+  const [description, setDescription] = useState("");
+  const [name, setName] = useState("");
+  const [additional_info, setAdditionalInfo] = useState("");
+  const [email, setEmail] = useState("");
+  const [phone, setPhone] = useState("");
+  const [date, setDate] = useState("");
 
   const navigate = useNavigate();
 
@@ -30,7 +26,9 @@ const AddJobPage = () => {
       return;
     }
 
-    const location = `${selectPosition.display_name} (${selectPosition.lat}, ${selectPosition.lon})`;
+    const location = selectPosition.display_name;
+    const latitude = selectPosition.lat;
+    const longitude = selectPosition.lon;
 
     const data = {
       title,
@@ -42,6 +40,8 @@ const AddJobPage = () => {
       email,
       phone,
       date,
+      latitude,
+      longitude,
     };
 
     apiCreatePost(data, navigate);
@@ -99,9 +99,11 @@ const AddJobPage = () => {
               <label className="block text-gray-700 font-bold mb-2">Search Location</label>
               <SearchBox selectPosition={selectPosition} setSelectPosition={setSelectPosition} />
             </div>
-            <div className="mb-4">
-              <Maps selectPosition={selectPosition} />
-            </div>
+            {selectPosition && (
+              <div className="mb-4">
+                <Maps selectPosition={selectPosition} />
+              </div>
+            )}
             <div className="mb-4">
               <label htmlFor="event_datetime" className="block text-gray-700 font-bold mb-2">Task Date & Time</label>
               <input
@@ -113,7 +115,6 @@ const AddJobPage = () => {
                 onChange={(e) => setDate(e.target.value)}
               />
             </div>
-
             <h3 className="text-2xl mb-5">Contact Info</h3>
 
             <div className="mb-4">

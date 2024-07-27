@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useState, useEffect } from "react";
 import OutlinedInput from "@mui/material/OutlinedInput";
 import Button from "@mui/material/Button";
 import List from "@mui/material/List";
@@ -10,8 +10,15 @@ import Divider from "@mui/material/Divider";
 const NOMINATIM_BASE_URL = "https://nominatim.openstreetmap.org/search?";
 
 export default function SearchBox(props) {
-  const { selectPosition, setSelectPosition } = props;
+  const { selectPosition, setSelectPosition, defaultValue } = props;
   const [searchText, setSearchText] = useState("");
+
+  useEffect(() => {
+    if (defaultValue) {
+      setSearchText(defaultValue);
+    }
+  }, [defaultValue]);
+
   const [listPlace, setListPlace] = useState([]);
 
   const handleSearch = () => {
@@ -40,6 +47,13 @@ export default function SearchBox(props) {
     setSearchText(item.display_name);
   };
 
+  const handleKeyDown = (event) => {
+    if (event.key === "Enter") {
+      event.preventDefault();
+      handleSearch();
+    }
+  };
+
   return (
     <div style={{ display: "flex", flexDirection: "column" }}>
       <div style={{ display: "flex" }}>
@@ -48,6 +62,7 @@ export default function SearchBox(props) {
             style={{ width: "100%" }}
             value={searchText}
             onChange={(event) => setSearchText(event.target.value)}
+            onKeyDown={handleKeyDown}
           />
         </div>
         <div style={{ display: "flex", alignItems: "center", padding: "0px 20px" }}>

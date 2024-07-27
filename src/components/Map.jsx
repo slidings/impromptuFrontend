@@ -19,18 +19,9 @@ const createClusterCustomIcon = function (cluster) {
   });
 };
 
-// Function to extract latitude and longitude from the location string
-const extractLatLon = (location) => {
-  const matches = location.match(/\(([^)]+)\)/);
-  if (matches) {
-    const [lat, lon] = matches[1].split(',').map(Number);
-    return { lat, lon };
-  }
-  return { lat: 1.2966, lon: 103.7764 }; // default coordinates if extraction fails
-};
-
-export default function Map({ location }) {
-  const { lat, lon } = extractLatLon(location);
+export default function Map({ latitude, longitude, location }) {
+  const lat = latitude || 1.2966; // default latitude if not provided
+  const lon = longitude || 103.7764; // default longitude if not provided
 
   // Markers
   const markers = [
