@@ -5,10 +5,11 @@ import React, { useState } from "react";
 import { format } from "date-fns";
 import apiGetPost from "../services/GetPostService";
 import apiDeletePost from "../services/DeletePostService";
+import apiReportPost from "../services/ReportPostService"; // Import the report service
 import Map from "../components/Map";
 
 const JobPage = () => {
-  const [selectPosition, setSelectPosition] = useState(null);
+  const [isReported, setIsReported] = useState(false); // Track report status
   const navigate = useNavigate();
   const id = localStorage.getItem("id");
   const isStaff = localStorage.getItem("is_staff") === 'true'; // Retrieve and parse is_staff
@@ -18,25 +19,25 @@ const JobPage = () => {
 
   const onDeleteClick = (jobId) => {
     const confirm = window.confirm("Are you sure you want to delete this listing?");
-
     if (!confirm) return;
-
     apiDeletePost(jobId, navigate);
   };
 
   const onReportClick = () => {
     const confirm = window.confirm("Abuse of the report function may lead to a suspension of your account. Continue to report?");
-
     if (confirm) {
-      // Handle report action here
-      alert("Reported as inappropriate");
+      apiReportPost(job.id).then(() => {
+        setIsReported(true); // Disable the button after a successful report
+      }).catch((error) => {
+        console.error(error); // Optionally handle the error
+      });
     }
   };
 
   const locationName = job.location;
-
-  // Format the date and time
   const formattedDate = job.date ? format(new Date(job.date), "PPpp") : "";
+  const formattedPostDate = job.timestamp ? format(new Date(job.timestamp), "PPpp") : "";
+  const formattedUpdateDate = job.updated ? format(new Date(job.updated), "PPpp") : "";
 
   return (
     <>
@@ -106,6 +107,19 @@ const JobPage = () => {
                 <p className="my-2 bg-indigo-100 p-2 font-bold">{job.phone}</p>
               </div>
 
+              <div className="bg-white p-6 rounded-lg shadow-md mt-6">
+                {formattedPostDate && (
+                  <div className="text-gray-500 mb-4">
+                    <strong>Posted On: </strong>{formattedPostDate}
+                  </div>
+                )}
+                {formattedUpdateDate && (
+                  <div className="text-gray-500 mb-4">
+                    <strong>Last Updated: </strong>{formattedUpdateDate}
+                  </div>
+                )}
+              </div>
+
               {job.user == id || isStaff ? (
                 <div className="bg-white p-6 rounded-lg shadow-md mt-6">
                   <h3 className="text-xl font-bold mb-6">Manage Task</h3>
@@ -123,10 +137,11 @@ const JobPage = () => {
                 <div className="bg-white p-5 rounded-lg shadow-md mt-6">
                   <button
                     onClick={onReportClick}
-                    className="bg-red-500 hover:bg-red-600 text-white font-bold py-2 px-4 rounded-full w-full focus:outline-none focus:shadow-outline mt-4 flex items-center justify-center"
+                    disabled={isReported} // Disable button if reported
+                    className={`bg-red-500 hover:bg-red-600 text-white font-bold py-2 px-4 rounded-full w-full focus:outline-none focus:shadow-outline mt-4 flex items-center justify-center ${isReported ? 'opacity-50 cursor-not-allowed' : ''}`}
                   >
                     <FaFlag className="mr-2" />
-                    Report as inappropriate
+                    {isReported ? 'Reported' : 'Report as inappropriate'}
                   </button>
                 </div>
               )}
